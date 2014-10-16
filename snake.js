@@ -21,7 +21,7 @@
     this.segments = [Snake.FIRST_SEGMENT];
     for (var i = 0; i < 3; i++) {
       var lastSegment = this.segments[this.segments.length - 1];
-      this.segments.push(lastSegment.sumWith([-1, 0]));
+      this.segments.push(lastSegment.sumWith([0, -1]));
     }
   }
 
@@ -60,33 +60,48 @@
   };
 
 
-  var Board = SnakeGame.Board = function () {
+  var Board = SnakeGame.Board = function (sideLength) {
+    this.sideLength = sideLength;
     this.snake = new Snake();
   }
 
-  Board.SIZE = 20;
+  Board.SIZE = 25;
+
+  Board.prototype.cellSideLength = function () {
+    return (this.sideLength - ( (Board.SIZE - 1) * 2)) / Board.SIZE;
+  };
+
+  Board.prototype.wrapSnake = function () {
+    this.snake.segments[0] = this.snake.segments[0].map(function (ord) {
+      return (ord + Board.SIZE) % Board.SIZE;
+    })
+  };
 
   Board.prototype.render = function () {
-    var renderString = "<pre>";
+    rows = [];
 
     for (var i = 0; i < Board.SIZE; i++) {
-      var renderStringRow = "";
-      var snakeCols = this.snake.colsForSegmentsInRow(i);
+      var $row = $("<div></div>");
+      $row.height(this.cellSideLength());
+      $row.addClass("row");
 
+      var snakeCols = this.snake.colsForSegmentsInRow(i);
       for (var j = 0; j < Board.SIZE; j++) {
+        var $cell = $("<div></div>");
+        $cell.width(this.cellSideLength());
+        $cell.addClass("cell");
+
         if (snakeCols.indexOf(j) !== -1) {
-          renderStringRow += " S ";
-        } else {
-          renderStringRow += " . ";
+          $cell.addClass("snake_segment");
         }
+
+        $row.append($cell);
       }
 
-      renderStringRow += "\n";
-      renderString += renderStringRow;
+      rows.push($row);
     }
 
-    renderString += "</pre>";
-    return renderString;
+    return rows;
   };
 
 })();
