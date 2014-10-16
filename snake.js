@@ -28,10 +28,10 @@
   Snake.FIRST_SEGMENT = [10, 10];
   Snake.DIR_CHARS = ["n", "e", "s", "w"];
   Snake.DIR_CHAR_VALUES = {
-    "n": [0, 1],
-    "e": [1, 0],
-    "s": [0, -1],
-    "w": [1, 0]
+    "n": [-1, 0],
+    "e": [0, 1],
+    "s": [1, 0],
+    "w": [0, -1]
   }
 
   Snake.prototype.move = function () {
@@ -46,7 +46,7 @@
   };
 
   Snake.prototype.turn = function (dirChar) {
-    this.direction = Snake.DIR_CHAR_VALUES(dirChar);
+    this.direction = Snake.DIR_CHAR_VALUES[dirChar];
   };
 
   Snake.prototype.colsForSegmentsInRow = function (rowIdx) {
@@ -55,7 +55,7 @@
     });
 
     return segmentsInRow.map(function (segment) {
-      segment[1];
+      return segment[1];
     });
   };
 
@@ -75,9 +75,9 @@
 
       for (var j = 0; j < Board.SIZE; j++) {
         if (snakeCols.indexOf(j) !== -1) {
-          renderStringRow += "S";
+          renderStringRow += " S ";
         } else {
-          renderStringRow += ".";
+          renderStringRow += " . ";
         }
       }
 

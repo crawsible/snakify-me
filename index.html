@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <title>Snake!</title>
+</head>
+<body>
+  <script src="snake.js"></script>
+  <script src="snake-view.js"></script>
+
+  <div id="snake_game"></div>
+
+  <script>
+  var $snake_game = $("#snake_game");
+  var view = new SnakeGame.View($snake_game);
+  </script>
+</body>
+</html>
