@@ -67,7 +67,7 @@
   Board.SIZE = 20;
 
   Board.prototype.render = function () {
-    var renderString = "";
+    var renderString = "<pre>";
 
     for (var i = 0; i < Board.SIZE; i++) {
       var renderStringRow = "";
@@ -85,6 +85,7 @@
       renderString += renderStringRow;
     }
 
+    renderString += "</pre>";
     return renderString;
   };
 
